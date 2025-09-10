@@ -10,8 +10,9 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "tf-remote-backend-0718"
+    bucket = "tf-remote-backend-0722"
     key    = "state.tfstate"
     region = "us-east-2"
   }
 }
+
