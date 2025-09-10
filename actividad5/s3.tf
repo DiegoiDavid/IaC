@@ -3,7 +3,7 @@ resource "random_id" "bucket_suflix" {
 }
 
 resource "aws_s3_bucket" "alediego_bucket" {
-    bucket = "alediego - bucket-${random_id.bucket_suflix.hex}"
+    bucket = "alediego-bucket-${random_id.bucket_suflix.hex}"
   
 }
 
