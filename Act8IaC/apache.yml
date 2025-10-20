@@ -1,0 +1,45 @@
+---
+- name: Instalar y verificar Apache
+  hosts: all
+  become: yes
+  tasks:
+    - name: Instalar Apache en Debian/Ubuntu
+      apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Instalar Apache en RHEL/CentOS/AL
+      yum:
+        name: httpd
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Iniciar y habilitar Apache (Debian/Ubuntu)
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Iniciar y habilitar Apache (RHEL/CentOS/AL)
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Verificar que Apache esté corriendo
+      command: systemctl status apache2
+      register: apache_status
+      ignore_errors: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Verificar que Apache esté corriendo (RHEL/CentOS/AL)
+      command: systemctl status httpd
+      register: apache_status
+      ignore_errors: yes
+      when: ansible_os_family == "RedHat"
+
+    - debug:
+        var: apache_status.stdout_lines

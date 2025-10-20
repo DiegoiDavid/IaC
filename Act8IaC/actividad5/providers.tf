@@ -1,0 +1,18 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.0"
+    }
+    random = {
+        source = "hashicorp/random"
+        version = "~> 3.0"
+    }
+  }
+  backend "s3" {
+    bucket = "tf-remote-backend-0722"
+    key    = "state.tfstate"
+    region = "us-east-2"
+  }
+}
+
